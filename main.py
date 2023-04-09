@@ -1,11 +1,15 @@
 from abc import ABC
 import customtkinter as ctk
 from calculator import open_calculator
+from DistanceConverter import open_distance_converter
 
 
 def on_calc_button_click():
     open_calculator()
-    print("Calculator")
+
+
+def on_dist_button_click():
+    open_distance_converter()
 
 
 def on_button_click():
@@ -34,7 +38,7 @@ class MyTabView(ctk.CTkTabview, ABC):
         # Converters
         self.button = ctk.CTkButton(master=self.tab("Converters"),
                                     text='Distances',
-                                    command=on_button_click)
+                                    command=on_dist_button_click)
         self.button.grid(row=0, column=0, padx=20, pady=10)
 
         self.button = ctk.CTkButton(master=self.tab("Converters"),
