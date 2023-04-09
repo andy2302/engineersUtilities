@@ -1,8 +1,10 @@
 from abc import ABC
 import customtkinter as ctk
+from calculator import open_calculator
 
 
 def on_calc_button_click():
+    open_calculator()
     print("Calculator")
 
 

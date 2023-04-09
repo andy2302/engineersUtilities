@@ -3,6 +3,15 @@ import darkdetect
 from settings import *
 from buttons import Button, ImageButton, NumButton, MathButton, MathImageButton
 from PIL import Image
+import subprocess
+import sys
+from os.path import abspath, dirname, join
+
+
+def open_calculator():
+    calculator_path = abspath(join(dirname(__file__), 'calculator.py'))
+    subprocess.Popen([sys.executable, calculator_path])
+
 
 try:
     from ctypes import windll, byref, sizeof, c_int
