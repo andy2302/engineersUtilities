@@ -7,8 +7,8 @@ from os.path import abspath, dirname, join
 
 
 def open_distance_converter():
-    calculator_path = abspath(join(dirname(__file__), 'DistanceConverter.py'))
-    subprocess.Popen([sys.executable, calculator_path])
+    distance_path = abspath(join(dirname(__file__), 'DistanceConverter.py'))
+    subprocess.Popen([sys.executable, distance_path])
 
 
 class DistanceConverter(ctk.CTk):
