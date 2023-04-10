@@ -29,6 +29,7 @@ class InDevFeatures(ctk.CTk):
             ["Frequency", "19", "False"],
             ["Info Tab", "20", "False"],
             ["PC Statistics", "90", "False"],
+            ["Macros Tab", "700", "False"],
             ["Current Version", " X ", ""],
         ]
 

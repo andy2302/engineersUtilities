@@ -173,7 +173,8 @@ class App(ctk.CTk):
         self.tab_view = MyTabView(master=window)
         self.tab_view.grid(row=1, column=0, padx=20, pady=20, sticky='nsew')
 
-        # Dev
+        # Dev - after finishing development will be changed to another
+        # functionality (ex. opening default calculator app) or something else
         dev_button = ctk.CTkButton(window, text='In Dev Features', command=open_dev_feat)
         dev_button.grid(row=2, column=0, padx=20, pady=20)
 
