@@ -3,12 +3,17 @@ import customtkinter as ctk
 from calculator import open_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
+from programmerConverter import open_programmer
 import tkinter as tk
 from tkinter import messagebox
 
 
 def on_calc_button_click():
     open_calculator()
+
+
+def on_programmer_click():
+    open_programmer()
 
 
 def on_dist_button_click():
@@ -46,7 +51,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.BINARY_button = ctk.CTkButton(master=self.tab("Calculators"),
                                            text='Programmer',  # binary hex dec oct
-                                           command=development_button_click)
+                                           command=on_programmer_click)
         self.BINARY_button.grid(row=0, column=2, padx=20, pady=10)
 
         self.date_button = ctk.CTkButton(master=self.tab("Calculators"),

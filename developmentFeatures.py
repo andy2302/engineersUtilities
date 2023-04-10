@@ -10,7 +10,7 @@ class InDevFeatures(ctk.CTk):
             ["Feature", "Version Value", "Completed"],
             ["Calculator", "1", "True"],
             ["Scientific", "2", "False"],
-            ["Programmer", "3", "False"],
+            ["Programmer", "3", "True"],
             ["Data Calc", "4", "False"],
             ["Graphic", "5", "False"],
             ["Data", "6", "False"],
