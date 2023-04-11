@@ -70,70 +70,99 @@ class MyTabView(ctk.CTkTabview, ABC):
         self.graph_button.grid(row=1, column=1, padx=20, pady=10)
 
         self.GB_button = ctk.CTkButton(master=self.tab("Calculators"),
-                                       text='Data',  # matplotlib?
+                                       text='Data',
                                        command=development_button_click)
         self.GB_button.grid(row=1, column=2, padx=20, pady=10)
 
         # Converters ------------------------------------------------------------------------------------------------
-        self.dist_button = ctk.CTkButton(master=self.tab("Converters"),
+        # Create a canvas widget and a scrollbar widget
+        self.converters_canvas = ctk.CTkCanvas(self.tab("Converters"))
+        self.converters_scrollbar = ctk.CTkScrollbar(self.tab("Converters"),
+                                                     command=self.converters_canvas.yview)
+        self.converters_canvas.config(yscrollcommand=self.converters_scrollbar.set, bg='#2b2b2b')
+        self.converters_scrollbar.pack(side=ctk.RIGHT, fill=ctk.Y)
+
+        # Create a frame inside the canvas to hold the converter buttons
+        self.converters_frame = ctk.CTkFrame(self.converters_canvas)
+        self.converters_canvas.create_window((0, 0), window=self.converters_frame, anchor='nw')
+
+        self.dist_button = ctk.CTkButton(master=self.converters_frame,
                                          text='Distances',  # self-explanatory
                                          command=on_dist_button_click)
         self.dist_button.grid(row=0, column=0, padx=20, pady=10)
 
-        self.weight_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.weight_button = ctk.CTkButton(master=self.converters_frame,
                                            text='Weights',  # self-explanatory
                                            command=development_button_click)
         self.weight_button.grid(row=0, column=1, padx=20, pady=10)
 
-        self.cur_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.cur_button = ctk.CTkButton(master=self.converters_frame,
                                         text='Currency',  # self-explanatory
                                         command=development_button_click)
         self.cur_button.grid(row=0, column=2, padx=20, pady=10)
 
-        self.vol_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.vol_button = ctk.CTkButton(master=self.converters_frame,
                                         text='Volume',  # self-explanatory
                                         command=development_button_click)
         self.vol_button.grid(row=1, column=0, padx=20, pady=10)
 
-        self.temp_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.temp_button = ctk.CTkButton(master=self.converters_frame,
                                          text='Temperatures',  # self-explanatory
                                          command=on_temp_conv_button_click)
         self.temp_button.grid(row=1, column=1, padx=20, pady=10)
 
-        self.energy_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.energy_button = ctk.CTkButton(master=self.converters_frame,
                                            text='Energy',  # self-explanatory
                                            command=development_button_click)
         self.energy_button.grid(row=1, column=2, padx=20, pady=10)
 
-        self.area_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.area_button = ctk.CTkButton(master=self.converters_frame,
                                          text='Area',  # self-explanatory
                                          command=development_button_click)
         self.area_button.grid(row=2, column=0, padx=20, pady=10)
 
-        self.speed_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.speed_button = ctk.CTkButton(master=self.converters_frame,
                                           text='Speed',  # self-explanatory
                                           command=development_button_click)
         self.speed_button.grid(row=2, column=1, padx=20, pady=10)
 
-        self.time_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.time_button = ctk.CTkButton(master=self.converters_frame,
                                          text='Time',  # self-explanatory
                                          command=development_button_click)
         self.time_button.grid(row=2, column=2, padx=20, pady=10)
 
-        self.power_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.power_button = ctk.CTkButton(master=self.converters_frame,
                                           text='Power',  # self-explanatory
                                           command=development_button_click)
         self.power_button.grid(row=3, column=0, padx=20, pady=10)
 
-        self.pressure_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.pressure_button = ctk.CTkButton(master=self.converters_frame,
                                              text='Pressure',  # self-explanatory
                                              command=development_button_click)
         self.pressure_button.grid(row=3, column=1, padx=20, pady=10)
 
-        self.angle_button = ctk.CTkButton(master=self.tab("Converters"),
+        self.angle_button = ctk.CTkButton(master=self.converters_frame,
                                           text='Angle',  # self-explanatory
                                           command=development_button_click)
         self.angle_button.grid(row=3, column=2, padx=20, pady=10)
+
+        self.freq_button = ctk.CTkButton(master=self.converters_frame,
+                                         text='Freq',  # self-explanatory
+                                         command=development_button_click)
+        self.freq_button.grid(row=4, column=1, padx=20, pady=10)
+
+        # Pack the canvas
+        self.converters_frame = ctk.CTkFrame(self.converters_canvas, bg_color='#2b2b2b')
+        self.converters_canvas.pack(side=ctk.LEFT, fill=ctk.BOTH, expand=True)
+        self.converters_canvas.configure(width=100, height=100)  # Set the width and height of the canvas
+        self.converters_canvas.bind('<Configure>', lambda e: self.converters_canvas.configure(
+            scrollregion=self.converters_canvas.bbox('all')))
+
+        # Bind mousewheel to the scrollbar
+        self.master.bind_all('<MouseWheel>', self._on_mousewheel)
+
+    def _on_mousewheel(self, event):
+        self.converters_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
         # Information ------------------------------------------------------------------------------------------------
         self.electronic_button = ctk.CTkButton(master=self.tab("Information"),
