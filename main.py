@@ -4,6 +4,7 @@ from calculator import open_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
 from programmerConverter import open_programmer
+from TemperatureConverter import open_temp_converter
 import tkinter as tk
 from tkinter import messagebox
 
@@ -18,6 +19,10 @@ def on_programmer_click():
 
 def on_dist_button_click():
     open_distance_converter()
+
+
+def on_temp_conv_button_click():
+    open_temp_converter()
 
 
 def development_button_click():
@@ -92,7 +97,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.temp_button = ctk.CTkButton(master=self.tab("Converters"),
                                          text='Temperatures',  # self-explanatory
-                                         command=development_button_click)
+                                         command=on_temp_conv_button_click)
         self.temp_button.grid(row=1, column=1, padx=20, pady=10)
 
         self.energy_button = ctk.CTkButton(master=self.tab("Converters"),

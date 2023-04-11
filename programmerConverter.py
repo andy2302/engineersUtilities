@@ -15,6 +15,8 @@ class ConversionBin(ctk.CTk):
         self.title("Programmer")
         self.geometry("400x150")
 
+        self.iconbitmap('E:/Python Projects Uni/engineersUtilities/assets/converter.ico')
+
         # Create variables to store values entered by user
         self.decimal_var = ctk.StringVar()
         self.binary_var = ctk.StringVar()
