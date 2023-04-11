@@ -5,6 +5,7 @@ from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
 from programmerConverter import open_programmer
 from TemperatureConverter import open_temp_converter
+from VolumeConverter import open_volume
 import tkinter as tk
 from tkinter import messagebox
 
@@ -23,6 +24,10 @@ def on_dist_button_click():
 
 def on_temp_conv_button_click():
     open_temp_converter()
+
+
+def on_volume_conv_click():
+    open_volume()
 
 
 def development_button_click():
@@ -103,7 +108,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.vol_button = ctk.CTkButton(master=self.converters_frame,
                                         text='Volume',  # self-explanatory
-                                        command=development_button_click)
+                                        command=on_volume_conv_click)
         self.vol_button.grid(row=1, column=0, padx=20, pady=10)
 
         self.temp_button = ctk.CTkButton(master=self.converters_frame,
