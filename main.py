@@ -10,6 +10,7 @@ from DataConverter import open_data_conversion
 from MassConverter import open_mass
 from EnergyConverter import open_energy
 from AreaConverter import open_area
+from CurrencyConverter import open_currency_conv
 import tkinter as tk
 from tkinter import messagebox
 
@@ -48,6 +49,10 @@ def on_energy_conv_click():
 
 def on_area_conv_click():
     open_area()
+
+
+def on_currency_conv_click():
+    open_currency_conv()
 
 
 def development_button_click():
@@ -123,7 +128,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.cur_button = ctk.CTkButton(master=self.converters_frame,
                                         text='Currency',  # self-explanatory
-                                        command=development_button_click)
+                                        command=on_currency_conv_click)
         self.cur_button.grid(row=0, column=2, padx=20, pady=10)
 
         self.vol_button = ctk.CTkButton(master=self.converters_frame,

@@ -16,7 +16,7 @@ class InDevFeatures(ctk.CTk):
             ["Data", "6", "True"],
             ["Distances", "7", "True"],
             ["Weight", "8", "True"],
-            ["Currency", "9", "False"],
+            ["Currency", "9", "True"],
             ["Volume", "10", "True"],
             ["Temperature", "11", "True"],
             ["Energy", "12", "True"],
