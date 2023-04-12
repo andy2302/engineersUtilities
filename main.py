@@ -9,6 +9,7 @@ from VolumeConverter import open_volume
 from DataConverter import open_data_conversion
 from MassConverter import open_mass
 from EnergyConverter import open_energy
+from AreaConverter import open_area
 import tkinter as tk
 from tkinter import messagebox
 
@@ -43,6 +44,10 @@ def on_data_conv_click():
 
 def on_energy_conv_click():
     open_energy()
+
+
+def on_area_conv_click():
+    open_area()
 
 
 def development_button_click():
@@ -138,7 +143,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.area_button = ctk.CTkButton(master=self.converters_frame,
                                          text='Area',  # self-explanatory
-                                         command=development_button_click)
+                                         command=on_area_conv_click)
         self.area_button.grid(row=2, column=0, padx=20, pady=10)
 
         self.speed_button = ctk.CTkButton(master=self.converters_frame,

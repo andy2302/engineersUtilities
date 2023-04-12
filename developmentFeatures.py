@@ -20,7 +20,7 @@ class InDevFeatures(ctk.CTk):
             ["Volume", "10", "True"],
             ["Temperature", "11", "True"],
             ["Energy", "12", "True"],
-            ["Area", "13", "False"],
+            ["Area", "13", "True"],
             ["Speed", "14", "False"],
             ["Time", "15", "False"],
             ["Power", "16", "False"],
