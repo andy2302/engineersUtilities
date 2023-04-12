@@ -6,6 +6,7 @@ from developmentFeatures import open_indev_features
 from programmerConverter import open_programmer
 from TemperatureConverter import open_temp_converter
 from VolumeConverter import open_volume
+from DataConverter import open_data_conversion
 import tkinter as tk
 from tkinter import messagebox
 
@@ -28,6 +29,10 @@ def on_temp_conv_button_click():
 
 def on_volume_conv_click():
     open_volume()
+
+
+def on_data_conv_click():
+    open_data_conversion()
 
 
 def development_button_click():
@@ -76,7 +81,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.GB_button = ctk.CTkButton(master=self.tab("Calculators"),
                                        text='Data',
-                                       command=development_button_click)
+                                       command=on_data_conv_click)
         self.GB_button.grid(row=1, column=2, padx=20, pady=10)
 
         # Converters ------------------------------------------------------------------------------------------------
