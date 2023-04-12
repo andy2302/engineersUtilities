@@ -5,7 +5,7 @@ from os.path import abspath, dirname, join
 
 
 def open_programmer():
-    programmer_path = abspath(join(dirname(__file__), 'programmerConverter.py'))
+    programmer_path = abspath(join(dirname(__file__), 'ProgrammerConverter.py'))
     subprocess.Popen([sys.executable, programmer_path])
 
 
