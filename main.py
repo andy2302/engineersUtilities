@@ -8,6 +8,7 @@ from TemperatureConverter import open_temp_converter
 from VolumeConverter import open_volume
 from DataConverter import open_data_conversion
 from MassConverter import open_mass
+from EnergyConverter import open_energy
 import tkinter as tk
 from tkinter import messagebox
 
@@ -38,6 +39,10 @@ def on_mass_conv_click():
 
 def on_data_conv_click():
     open_data_conversion()
+
+
+def on_energy_conv_click():
+    open_energy()
 
 
 def development_button_click():
@@ -128,7 +133,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.energy_button = ctk.CTkButton(master=self.converters_frame,
                                            text='Energy',  # self-explanatory
-                                           command=development_button_click)
+                                           command=on_energy_conv_click)
         self.energy_button.grid(row=1, column=2, padx=20, pady=10)
 
         self.area_button = ctk.CTkButton(master=self.converters_frame,
