@@ -71,18 +71,27 @@ class Calculator(ctk.CTk):
             font=main_font)
 
         # invert button
-        invert_image = ctk.CTkImage(
-            light_image=Image.open(OPERATORS['invert']['image path']['dark']),
-            dark_image=Image.open(OPERATORS['invert']['image path']['light'])
-        )
-        ImageButton(
-            parent=self,
-            text='',
-            func=self.invert,
-            col=OPERATORS['invert']['col'],
-            row=OPERATORS['invert']['row'],
-            image=invert_image
-        )
+        if OPERATORS['invert']['image path'] is not None:
+            invert_image = ctk.CTkImage(
+                light_image=Image.open(OPERATORS['invert']['image path']['dark']),
+                dark_image=Image.open(OPERATORS['invert']['image path']['light'])
+            )
+            ImageButton(
+                parent=self,
+                text='',
+                func=self.invert,
+                col=OPERATORS['invert']['col'],
+                row=OPERATORS['invert']['row'],
+                image=invert_image
+            )
+        else:
+            Button(
+                parent=self,
+                text=OPERATORS['invert']['text'],
+                func=self.invert,
+                col=OPERATORS['invert']['col'],
+                row=OPERATORS['invert']['row'],
+                font=main_font)
 
         # number buttons
         for num, data in NUM_POSITIONS.items():
@@ -99,7 +108,7 @@ class Calculator(ctk.CTk):
         # math buttons
         for operator, data in MATH_POSITIONS.items():
             if data['image path']:
-                divide_image=ctk.CTkImage(
+                divide_image = ctk.CTkImage(
                     light_image=Image.open(data['image path']['dark']),
                     dark_image=Image.open(data['image path']['light'])
                 )

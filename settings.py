@@ -25,7 +25,7 @@ NUM_POSITIONS = {
 }
 
 MATH_POSITIONS = {
-    '/': {'col': 3, 'row': 2, 'character': '', 'image path': {'light': 'E:/Python Projects Uni/engineersUtilities/assets/divide.png', 'dark': 'E:/Python Projects Uni/engineersUtilities/assets/divide.png'}},
+    '/': {'col': 3, 'row': 2, 'character': '/', 'image path': None},
     '*': {'col': 3, 'row': 3, 'character': 'x', 'image path': None},
     '-': {'col': 3, 'row': 4, 'character': '-', 'image path': None},
     '=': {'col': 3, 'row': 6, 'character': '=', 'image path': None},
@@ -34,7 +34,7 @@ MATH_POSITIONS = {
 
 OPERATORS = {
     'clear': {'col': 0, 'row': 2, 'text': 'AC', 'image path': None},
-    'invert': {'col': 1, 'row': 2, 'text': '', 'image path': {'light': 'E:/Python Projects Uni/engineersUtilities/assets/plusMinus.png', 'dark': 'E:/Python Projects Uni/engineersUtilities/assets/plusMinus.png'}},
+    'invert': {'col': 1, 'row': 2, 'text': '+/-', 'image path': None},
     'percent': {'col': 2, 'row': 2, 'text': '%', 'image path': None},
 }
 
