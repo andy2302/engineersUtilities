@@ -1,5 +1,5 @@
 from customtkinter import CTkButton
-from settings import *
+from .settings import *
 
 
 class Button(CTkButton):

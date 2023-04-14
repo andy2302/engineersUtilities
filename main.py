@@ -1,6 +1,6 @@
 from abc import ABC
 import customtkinter as ctk
-from calculator import open_calculator
+from SimpleCalculator.calculator import open_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
 from ProgrammerConverter import open_programmer
