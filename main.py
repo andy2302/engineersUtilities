@@ -12,6 +12,7 @@ from EnergyConverter import open_energy
 from AreaConverter import open_area
 from CurrencyConverter import open_currency_conv
 from SpeedConverter import open_speed_conversion
+from TimeConverter import open_time_converter
 import tkinter as tk
 from tkinter import messagebox
 
@@ -58,6 +59,10 @@ def on_currency_conv_click():
 
 def on_speed_conv_click():
     open_speed_conversion()
+
+
+def on_time_conv_click():
+    open_time_converter()
 
 
 def development_button_click():
@@ -163,7 +168,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.time_button = ctk.CTkButton(master=self.converters_frame,
                                          text='Time',  # self-explanatory
-                                         command=development_button_click)
+                                         command=on_time_conv_click)
         self.time_button.grid(row=2, column=2, padx=20, pady=10)
 
         self.power_button = ctk.CTkButton(master=self.converters_frame,
