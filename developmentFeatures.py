@@ -11,7 +11,7 @@ class InDevFeatures(ctk.CTk):
             ["Calculator", "1", "True"],
             ["Scientific", "2", "False"],
             ["Programmer", "3", "True"],
-            ["Date Calc", "4", "False"],
+            ["Date Calc", "4", "True"],
             ["Graphic", "5", "False"],
             ["Data", "6", "True"],
             ["Distances", "7", "True"],

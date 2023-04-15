@@ -1,6 +1,7 @@
 from abc import ABC
 import customtkinter as ctk
 from SimpleCalculator.calculator import open_calculator
+from DateCalculator import open_date_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
 from ProgrammerConverter import open_programmer
@@ -87,6 +88,11 @@ def on_freq_conv_click():
     open_freq_converter()
 
 
+def on_date_calc_conv_click():
+    open_date_calculator()
+    development_button_click()
+
+
 def development_button_click():
     tk.messagebox.showerror('DEVELOPMENT', 'Feature currently under development')
 
@@ -123,7 +129,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.date_button = ctk.CTkButton(master=self.tab("Calculators"),
                                          text='Date calculation',  # from date to date
-                                         command=development_button_click)
+                                         command=on_date_calc_conv_click)
         self.date_button.grid(row=1, column=0, padx=20, pady=10)
 
         self.graph_button = ctk.CTkButton(master=self.tab("Calculators"),
