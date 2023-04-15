@@ -13,6 +13,7 @@ from AreaConverter import open_area
 from CurrencyConverter import open_currency_conv
 from SpeedConverter import open_speed_conversion
 from TimeConverter import open_time_converter
+from PowerConverter import open_power_converter
 import tkinter as tk
 from tkinter import messagebox
 
@@ -63,6 +64,10 @@ def on_speed_conv_click():
 
 def on_time_conv_click():
     open_time_converter()
+
+
+def on_power_conv_click():
+    open_power_converter()
 
 
 def development_button_click():
@@ -173,7 +178,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.power_button = ctk.CTkButton(master=self.converters_frame,
                                           text='Power',  # self-explanatory
-                                          command=development_button_click)
+                                          command=on_power_conv_click)
         self.power_button.grid(row=3, column=0, padx=20, pady=10)
 
         self.pressure_button = ctk.CTkButton(master=self.converters_frame,

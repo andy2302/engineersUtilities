@@ -23,7 +23,7 @@ class InDevFeatures(ctk.CTk):
             ["Area", "13", "True"],
             ["Speed", "14", "True"],
             ["Time", "15", "True"],
-            ["Power", "16", "False"],
+            ["Power", "16", "True"],
             ["Pressure", "17", "False"],
             ["Angle", "18", "False"],
             ["Frequency", "19", "False"],
