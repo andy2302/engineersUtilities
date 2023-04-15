@@ -84,6 +84,7 @@ def on_angle_conv_click():
 def on_freq_conv_click():
     open_freq_converter()
 
+
 def development_button_click():
     tk.messagebox.showerror('DEVELOPMENT', 'Feature currently under development')
 
@@ -104,7 +105,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         # Calculators ------------------------------------------------------------------------------------------------
         self.calc_button = ctk.CTkButton(master=self.tab("Calculators"),
-                                         text='Calculator',  # to add square root, power, 1 over x, memory
+                                         text='Calculator',  # Simple Calculator
                                          command=on_calc_button_click)
         self.calc_button.grid(row=0, column=0, padx=20, pady=10)
 
