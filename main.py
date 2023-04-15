@@ -11,6 +11,7 @@ from MassConverter import open_mass
 from EnergyConverter import open_energy
 from AreaConverter import open_area
 from CurrencyConverter import open_currency_conv
+from SpeedConverter import open_speed_conversion
 import tkinter as tk
 from tkinter import messagebox
 
@@ -53,6 +54,10 @@ def on_area_conv_click():
 
 def on_currency_conv_click():
     open_currency_conv()
+
+
+def on_speed_conv_click():
+    open_speed_conversion()
 
 
 def development_button_click():
@@ -153,7 +158,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.speed_button = ctk.CTkButton(master=self.converters_frame,
                                           text='Speed',  # self-explanatory
-                                          command=development_button_click)
+                                          command=on_speed_conv_click)
         self.speed_button.grid(row=2, column=1, padx=20, pady=10)
 
         self.time_button = ctk.CTkButton(master=self.converters_frame,
