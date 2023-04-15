@@ -19,6 +19,8 @@ from AngleConverter import open_angle_converter
 from FrequencyConverter import open_freq_converter
 import tkinter as tk
 from tkinter import messagebox
+import cProfile
+import pstats
 
 
 def on_calc_button_click():
@@ -221,33 +223,33 @@ class MyTabView(ctk.CTkTabview, ABC):
         # Bind mousewheel to the scrollbar
         self.master.bind_all('<MouseWheel>', self._on_mousewheel)
 
-    def _on_mousewheel(self, event):
-        self.converters_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
-
         # Information ------------------------------------------------------------------------------------------------
         self.electronic_button = ctk.CTkButton(master=self.tab("Information"),
                                                text='Electronics - Formulas, Schematic Design, PCB Design',
                                                # Information helpful for an electronic engineer/student
                                                command=development_button_click)
-        self.electronic_button.grid(row=0, column=0, columnspan=3, padx=20, pady=10)
+        self.electronic_button.grid(row=0, column=0, columnspan=3, padx=20, pady=10, sticky='ew')
 
         self.prog_button = ctk.CTkButton(master=self.tab("Information"),
                                          text='Programming - Languages, Building Apps, AI',
                                          # Information helpful for a programmer/student
                                          command=development_button_click)
-        self.prog_button.grid(row=1, column=0, columnspan=3, padx=20, pady=10)
+        self.prog_button.grid(row=1, column=0, columnspan=3, padx=20, pady=10, sticky='ew')
 
         self.mech_button = ctk.CTkButton(master=self.tab("Information"),
                                          text='Mechanics - Physics, Motion, Materials and Applications',
                                          # Information helpful for a Mechanical engineer/student
                                          command=development_button_click)
-        self.mech_button.grid(row=2, column=0, columnspan=3, padx=20, pady=10)
+        self.mech_button.grid(row=2, column=0, columnspan=3, padx=20, pady=10, sticky='ew')
 
         self.robo_button = ctk.CTkButton(master=self.tab("Information"),
                                          text='Robotics - Combining Electronics and Mechanics with Programming',
                                          # Information helpful for an engineer getting into robotics
                                          command=development_button_click)
-        self.robo_button.grid(row=3, column=0, columnspan=3, padx=20, pady=10)
+        self.robo_button.grid(row=3, column=0, columnspan=3, padx=20, pady=10, sticky='ew')
+
+    def _on_mousewheel(self, event):
+        self.converters_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
 
 class App(ctk.CTk):
@@ -291,4 +293,13 @@ class App(ctk.CTk):
         window.mainloop()
 
 
-app = App()
+def main():
+    app = App()
+
+
+cProfile.run('main()', 'profile_output.txt')
+
+p = pstats.Stats('profile_output.txt')
+p.strip_dirs().sort_stats('cumulative').print_stats(20)  # Show top 20 functions by cumulative time
+# after finishing the code remove this and replace it with app=App()
+# this is only for profiling and looking for bugs
