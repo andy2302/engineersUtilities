@@ -16,6 +16,7 @@ from TimeConverter import open_time_converter
 from PowerConverter import open_power_converter
 from PressureConverter import open_pressure_converter
 from AngleConverter import open_angle_converter
+from FrequencyConverter import open_freq_converter
 import tkinter as tk
 from tkinter import messagebox
 
@@ -79,6 +80,9 @@ def on_pressure_conv_click():
 def on_angle_conv_click():
     open_angle_converter()
 
+
+def on_freq_conv_click():
+    open_freq_converter()
 
 def development_button_click():
     tk.messagebox.showerror('DEVELOPMENT', 'Feature currently under development')
@@ -202,8 +206,8 @@ class MyTabView(ctk.CTkTabview, ABC):
         self.angle_button.grid(row=3, column=2, padx=20, pady=10)
 
         self.freq_button = ctk.CTkButton(master=self.converters_frame,
-                                         text='Freq',  # self-explanatory
-                                         command=development_button_click)
+                                         text='Frequency',  # self-explanatory
+                                         command=on_freq_conv_click)
         self.freq_button.grid(row=4, column=1, padx=20, pady=10)
 
         # Pack the canvas

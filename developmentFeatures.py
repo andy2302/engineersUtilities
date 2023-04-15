@@ -26,7 +26,7 @@ class InDevFeatures(ctk.CTk):
             ["Power", "16", "True"],
             ["Pressure", "17", "True"],
             ["Angle", "18", "True"],
-            ["Frequency", "19", "False"],
+            ["Frequency", "19", "True"],
             ["Info Tab", "20", "False"],
             ["PC Statistics", "90", "False"],
             ["Macros Tab", "700", "False"],
