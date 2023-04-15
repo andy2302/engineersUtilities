@@ -1,9 +1,12 @@
 from abc import ABC
+import json
+import subprocess
 import customtkinter as ctk
 from SimpleCalculator.calculator import open_calculator
 from DateCalculator import open_date_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
+from UtilitiesSettings import open_settings
 from ProgrammerConverter import open_programmer
 from TemperatureConverter import open_temp_converter
 from VolumeConverter import open_volume
@@ -22,6 +25,11 @@ import tkinter as tk
 from tkinter import messagebox
 import cProfile
 import pstats
+
+
+def load_shortcuts():
+    with open("shortcuts.json", "r") as f:
+        return json.load(f)
 
 
 def on_calc_button_click():
@@ -101,6 +109,14 @@ def open_dev_feat():
     open_indev_features()
 
 
+def on_settings_click():
+    open_settings()
+
+
+def open_shortcut(path):
+    subprocess.Popen([path])
+
+
 class MyTabView(ctk.CTkTabview, ABC):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -109,6 +125,7 @@ class MyTabView(ctk.CTkTabview, ABC):
         self.add("Calculators")
         self.add("Converters")
         self.add("Information")
+        self.add("Shortcuts")
         self.add("PC statistics")
 
         # Calculators ------------------------------------------------------------------------------------------------
@@ -254,6 +271,22 @@ class MyTabView(ctk.CTkTabview, ABC):
                                          command=development_button_click)
         self.robo_button.grid(row=3, column=0, columnspan=3, padx=20, pady=10, sticky='ew')
 
+        # Shortcuts ------------------------------------------------------------------------------------------------
+        self.shortcuts_frame = ctk.CTkFrame(self.tab("Shortcuts"))
+        self.shortcuts_frame.grid(row=0, column=0, padx=20, pady=10)
+
+        self.load_shortcuts()
+
+    def load_shortcuts(self):
+        # Load the shortcuts data
+        shortcuts = load_shortcuts()
+
+        # Create the shortcut buttons
+        for i, shortcut in enumerate(shortcuts):
+            button = ctk.CTkButton(self.shortcuts_frame, text=shortcut["name"],
+                                   command=lambda: open_shortcut(shortcut["path"]))
+            button.grid(row=i // 3, column=i % 3, padx=20, pady=10)
+
     def _on_mousewheel(self, event):
         self.converters_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
@@ -283,13 +316,17 @@ class App(ctk.CTk):
         # Dev - after finishing development will be changed to another
         # functionality (ex. opening default calculator app) or something else
         dev_button = ctk.CTkButton(window, text='In Dev Features', command=open_dev_feat)
-        dev_button.grid(row=2, column=0, padx=20, pady=20)
+        dev_button.grid(row=2, column=0)
+
+        # Settings
+        settings_button = ctk.CTkButton(window, text='Settings', command=open_settings)
+        settings_button.grid(row=3, column=0)
 
         # Quit
         quit_button = ctk.CTkButton(window,
                                     text='Quit',
                                     command=self.quit)
-        quit_button.grid(row=3, column=0, padx=20, pady=20)
+        quit_button.grid(row=4, column=0)
 
         # add padding to center the widgets in the window
         window.grid_rowconfigure(0, weight=1)

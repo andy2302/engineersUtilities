@@ -28,8 +28,8 @@ class InDevFeatures(ctk.CTk):
             ["Angle", "18", "True"],
             ["Frequency", "19", "True"],
             ["Info Tab", "20", "False"],
-            ["PC Statistics", "90", "False"],
-            ["Macros Tab", "700", "False"],
+            ["PC Statistics", "21", "False"],
+            ["Macros Tab/Shortcuts", "22", "True"],
             ["Current Version", " X ", ""],
         ]
 
@@ -45,7 +45,7 @@ class InDevFeatures(ctk.CTk):
 
         # Create the root window
         self.title('In Development features')
-        self.geometry('450x450')
+        self.geometry('500x350')
 
         # Create a frame to contain the canvas and scrollbar
         self.frame = ctk.CTkFrame(self)
