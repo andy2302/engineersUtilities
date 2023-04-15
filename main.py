@@ -1,6 +1,7 @@
 from abc import ABC
 import json
 import subprocess
+import functools
 import customtkinter as ctk
 from SimpleCalculator.calculator import open_calculator
 from DateCalculator import open_date_calculator
@@ -284,7 +285,7 @@ class MyTabView(ctk.CTkTabview, ABC):
         # Create the shortcut buttons
         for i, shortcut in enumerate(shortcuts):
             button = ctk.CTkButton(self.shortcuts_frame, text=shortcut["name"],
-                                   command=lambda: open_shortcut(shortcut["path"]))
+                                   command=functools.partial(open_shortcut, shortcut["path"]))
             button.grid(row=i // 3, column=i % 3, padx=20, pady=10)
 
     def _on_mousewheel(self, event):
