@@ -2,6 +2,10 @@ from abc import ABC
 import json
 import subprocess
 import functools
+import psutil
+import wmi
+import GPUtil
+import cpuinfo
 import customtkinter as ctk
 from SimpleCalculator.calculator import open_calculator
 from DateCalculator import open_date_calculator
@@ -116,6 +120,53 @@ def on_settings_click():
 
 def open_shortcut(path):
     subprocess.Popen([path])
+
+
+def get_cpu_info():
+    cpu = cpuinfo.get_cpu_info()
+    print("CPU  ", cpu)
+    return cpu
+
+
+def get_memory_info():
+    memory = psutil.virtual_memory()
+    print("RAM  ", memory)
+    return memory
+
+
+def get_gpu_info():
+    gpus = GPUtil.getGPUs()
+    print("GPU  ", gpus)
+    return gpus
+
+
+def get_disk_info():
+    disk_info = psutil.disk_usage('/')
+    print("DISKS",  disk_info)
+    return disk_info
+
+
+def get_power_and_temp():
+    # Requires Admin Privileges
+    w = wmi.WMI(namespace="root\wmi")
+    temperatures = []
+
+    try:
+        for sensor in w.MSAcpi_ThermalZoneTemperature():
+            temp = (sensor.CurrentTemperature - 2732) / 10.0
+            temperatures.append(temp)
+
+        if len(temperatures) > 0:
+            temps = f"Temperature: {temperatures}"
+        else:
+            temps = "Temperature data not available"
+
+    except Exception as e:
+        print(f"Error: {e}")
+        temps = "Temperature data not available"
+
+    print("TEMP", temps)
+    return temps
 
 
 class MyTabView(ctk.CTkTabview, ABC):
@@ -277,6 +328,34 @@ class MyTabView(ctk.CTkTabview, ABC):
         self.shortcuts_frame.grid(row=0, column=0, padx=20, pady=10)
 
         self.load_shortcuts()
+
+        # PC statistics --------------------------------------------------------------------------------------------
+        self.pc_stats_text_widget = ctk.CTkLabel(master=self.tab("PC statistics"),
+                                                 text="CTkLabel",
+                                                 anchor="nw", pady=0,
+                                                 width=60, height=15)
+        self.pc_stats_text_widget.grid(row=0, column=0, padx=20, pady=10, sticky='ew')
+
+        self.update_pc_stats()
+
+    def update_pc_stats(self):
+        cpu = get_cpu_info()
+        memory = get_memory_info()
+        gpus = get_gpu_info()
+        disk = get_disk_info()
+        temps = get_power_and_temp()
+
+        # PC Stats requires some updates in the future, but for the main implementation is perfect
+        pc_stats = f"CPU: {cpu['brand_raw']}\nMemory: {memory.total / (1024 * 1024 * 1024):.2f} GB\nDisk: {disk.total / (1024 * 1024 * 1024):.2f} GB\n"
+
+        for gpu in gpus:
+            pc_stats += f"GPU: {gpu.name}\n"
+
+        pc_stats += f"Temperature: {temps}\n"
+
+        print("STATS", pc_stats)
+
+        self.pc_stats_text_widget.configure(text=pc_stats)
 
     def load_shortcuts(self):
         # Load the shortcuts data

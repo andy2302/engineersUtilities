@@ -28,7 +28,7 @@ class InDevFeatures(ctk.CTk):
             ["Angle", "18", "True"],
             ["Frequency", "19", "True"],
             ["Info Tab", "20", "False"],
-            ["PC Statistics", "21", "False"],
+            ["PC Statistics", "21", "True"],
             ["Macros Tab/Shortcuts", "22", "True"],
             ["Current Version", " X ", ""],
         ]
