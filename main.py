@@ -3,7 +3,6 @@ import json
 import subprocess
 import functools
 import psutil
-import wmi
 import GPUtil
 import cpuinfo
 import customtkinter as ctk
@@ -33,8 +32,11 @@ import pstats
 
 
 def load_shortcuts():
-    with open("shortcuts.json", "r") as f:
-        return json.load(f)
+    try:
+        with open("shortcuts.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
 
 
 def on_calc_button_click():
@@ -147,26 +149,22 @@ def get_disk_info():
 
 
 def get_power_and_temp():
-    # Requires Admin Privileges
-    w = wmi.WMI(namespace="root\wmi")
-    temperatures = []
-
+    # Get CPU temperature
     try:
-        for sensor in w.MSAcpi_ThermalZoneTemperature():
-            temp = (sensor.CurrentTemperature - 2732) / 10.0
-            temperatures.append(temp)
+        output = subprocess.check_output(["osascript", "-e", 'tell application "System Events" to get temperature of thermal zone 0'])
+        cpu_temp = float(output.strip())
+        temp_str = f"Temperature: {cpu_temp:.1f}°C"
+    except subprocess.CalledProcessError:
+        temp_str = "Temperature data not available"
 
-        if len(temperatures) > 0:
-            temps = f"Temperature: {temperatures}"
-        else:
-            temps = "Temperature data not available"
+    # Get power usage
+    output = subprocess.check_output(["pmset", "-g", "batt"])
+    if "AC Power" in output.decode("utf-8"):
+        power_str = "Plugged in"
+    else:
+        power_str = "Not plugged in"
 
-    except Exception as e:
-        print(f"Error: {e}")
-        temps = "Temperature data not available"
-
-    print("TEMP", temps)
-    return temps
+    return temp_str, power_str
 
 
 class MyTabView(ctk.CTkTabview, ABC):
@@ -416,13 +414,14 @@ class App(ctk.CTk):
         window.mainloop()
 
 
-def main():
-    app = App()
-
-
-cProfile.run('main()', 'profile_output.txt')
-
-p = pstats.Stats('profile_output.txt')
-p.strip_dirs().sort_stats('cumulative').print_stats(20)  # Show top 20 functions by cumulative time
+app = App()
+# def main():
+#     app = App()
+#
+#
+# cProfile.run('main()', 'profile_output.txt')
+#
+# p = pstats.Stats('profile_output.txt')
+# p.strip_dirs().sort_stats('cumulative').print_stats(20)  # Show top 20 functions by cumulative time
 # after finishing the code remove this and replace it with app=App()
 # this is only for profiling and looking for bugs
