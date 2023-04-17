@@ -33,8 +33,18 @@ import pstats
 
 
 def load_shortcuts():
-    with open("shortcuts.json", "r") as f:
-        return json.load(f)
+    try:
+        with open("shortcuts.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        tk.messagebox.showinfo('Shortcuts not found', 'Creating shortcuts.json')
+        with open("shortcuts.json", "w") as f:
+            json.dump([], f)
+    except json.JSONDecodeError:
+        tk.messagebox.showerror('Shortcuts empty or malformed', 'Shortcuts empty or malformed, reformatting . . .')
+        with open("shortcuts.json", "w") as f:
+            json.dump([], f)
+        return []
 
 
 def on_calc_button_click():
@@ -170,7 +180,7 @@ def get_power_and_temp():
 
 
 class MyTabView(ctk.CTkTabview, ABC):
-    def __init__(self, master, **kwargs):
+    def __init__(self, master, loading_callback=None, **kwargs):
         super().__init__(master, **kwargs)
 
         # create tabs ------------------------------------------------------------------------------------------------
@@ -179,6 +189,7 @@ class MyTabView(ctk.CTkTabview, ABC):
         self.add("Information")
         self.add("Shortcuts")
         self.add("PC statistics")
+        loading_callback(5)
 
         # Calculators ------------------------------------------------------------------------------------------------
         self.calc_button = ctk.CTkButton(master=self.tab("Calculators"),
@@ -210,6 +221,7 @@ class MyTabView(ctk.CTkTabview, ABC):
                                        text='Data',
                                        command=on_data_conv_click)
         self.GB_button.grid(row=1, column=2, padx=20, pady=10)
+        loading_callback(10)
 
         # Converters ------------------------------------------------------------------------------------------------
         # Create a canvas widget and a scrollbar widget
@@ -297,6 +309,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         # Bind mousewheel to the scrollbar
         self.master.bind_all('<MouseWheel>', self._on_mousewheel)
+        loading_callback(40)
 
         # Information ------------------------------------------------------------------------------------------------
         self.electronic_button = ctk.CTkButton(master=self.tab("Information"),
@@ -322,12 +335,14 @@ class MyTabView(ctk.CTkTabview, ABC):
                                          # Information helpful for an engineer getting into robotics
                                          command=development_button_click)
         self.robo_button.grid(row=3, column=0, columnspan=3, padx=20, pady=10, sticky='ew')
+        loading_callback(65)
 
         # Shortcuts ------------------------------------------------------------------------------------------------
         self.shortcuts_frame = ctk.CTkFrame(self.tab("Shortcuts"))
         self.shortcuts_frame.grid(row=0, column=0, padx=20, pady=10)
 
         self.load_shortcuts()
+        loading_callback(75)
 
         # PC statistics --------------------------------------------------------------------------------------------
         self.pc_stats_text_widget = ctk.CTkLabel(master=self.tab("PC statistics"),
@@ -337,6 +352,7 @@ class MyTabView(ctk.CTkTabview, ABC):
         self.pc_stats_text_widget.grid(row=0, column=0, padx=20, pady=10, sticky='ew')
 
         self.update_pc_stats()
+        loading_callback(100)
 
     def update_pc_stats(self):
         cpu = get_cpu_info()
@@ -389,9 +405,10 @@ class App(ctk.CTk):
                              anchor="center", pady=0)
         label.grid(row=0, column=0, padx=20, pady=20, sticky='nsew')
 
-        # Tab view
-        self.tab_view = MyTabView(master=window)
-        self.tab_view.grid(row=1, column=0, padx=20, pady=20, sticky='nsew')
+        # Initialize the progress bar for the loading screen
+        self.progressbar_value = ctk.DoubleVar()
+        self.progressbar = ctk.CTkProgressBar(window, variable=self.progressbar_value)
+        self.progressbar.grid(row=1, column=0, padx=20, pady=20, sticky='nsew')
 
         # Dev - after finishing development will be changed to another
         # functionality (ex. opening default calculator app) or something else
@@ -413,7 +430,38 @@ class App(ctk.CTk):
         window.grid_rowconfigure(3, weight=1)
         window.grid_columnconfigure(0, weight=1)
 
+        # Show the loading screen and load app components
+        self.show_loading_screen(window)
+        window.after(100, self.load_app_components, window)
+
         window.mainloop()
+
+    def show_loading_screen(self, window):
+        self.loading_screen = ctk.CTkToplevel(window)
+        self.loading_screen.title("Loading")
+        self.loading_screen.geometry("300x100")
+        self.loading_screen.transient(window)
+        self.loading_screen.grab_set()
+
+        loading_label = ctk.CTkLabel(self.loading_screen, text="Loading, please wait...",
+                                      font=('Montserrat', 14))
+        loading_label.pack(pady=10)
+
+        loading_progressbar = ctk.CTkProgressBar(self.loading_screen,
+                                                 variable=self.progressbar_value)
+        loading_progressbar.pack(pady=10, padx=20, fill='x')
+
+    def load_app_components(self, window):
+        # Load MyTabView class
+        self.tab_view = MyTabView(master=window, loading_callback=self.update_progressbar)
+        self.tab_view.grid(row=1, column=0, padx=20, pady=20, sticky='nsew')
+
+        # Close loading screen and show the main app window
+        self.loading_screen.destroy()
+
+    def update_progressbar(self, value):
+        self.progressbar_value.set(value)
+        self.progressbar.update_idletasks()
 
 
 def main():
