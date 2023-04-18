@@ -9,7 +9,7 @@ class InDevFeatures(ctk.CTk):
         self.data = [
             ["Feature", "Version Value", "Completed"],
             ["Calculator", "1", "True"],
-            ["Scientific", "2", "False"],
+            ["Scientific", "2", "True"],
             ["Programmer", "3", "True"],
             ["Date Calc", "4", "True"],
             ["Graphic", "5", "False"],

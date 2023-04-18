@@ -8,6 +8,7 @@ import GPUtil
 import cpuinfo
 import customtkinter as ctk
 from Calculator.calculator import open_calculator
+from Calculator.ScientificCalculator import open_sci_calc
 from DateCalculator import open_date_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
@@ -49,6 +50,11 @@ def load_shortcuts():
 
 def on_calc_button_click():
     open_calculator()
+
+
+def on_sci_calc_click():
+    open_sci_calc()
+    development_button_click()
 
 
 def on_programmer_click():
@@ -199,7 +205,7 @@ class MyTabView(ctk.CTkTabview, ABC):
 
         self.scy_button = ctk.CTkButton(master=self.tab("Calculators"),
                                         text='Scientific',  # calculator with advanced functions, (ex. log, ln, etc.)
-                                        command=development_button_click)
+                                        command=on_sci_calc_click)
         self.scy_button.grid(row=0, column=1, padx=20, pady=10)
 
         self.BINARY_button = ctk.CTkButton(master=self.tab("Calculators"),
