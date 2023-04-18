@@ -1,7 +1,7 @@
 import customtkinter as ctk
 import darkdetect
-from SimpleCalculator.settings import *
-from SimpleCalculator.buttons import Button, ImageButton, NumButton, MathButton, MathImageButton
+from Calculator.settings import *
+from Calculator.buttons import Button, ImageButton, NumButton, MathButton, MathImageButton
 from PIL import Image
 import subprocess
 import sys

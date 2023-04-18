@@ -7,7 +7,7 @@ import wmi
 import GPUtil
 import cpuinfo
 import customtkinter as ctk
-from SimpleCalculator.calculator import open_calculator
+from Calculator.calculator import open_calculator
 from DateCalculator import open_date_calculator
 from DistanceConverter import open_distance_converter
 from developmentFeatures import open_indev_features
