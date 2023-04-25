@@ -4,6 +4,7 @@ from tkinter import messagebox
 import subprocess
 import sys
 from os.path import abspath, dirname, join
+from elevate_privileges import elevate_privileges_and_grant_wmi_permissions
 
 JSON_FILE = "shortcuts.json"
 
@@ -35,6 +36,10 @@ class Settings(ctk.CTk):
 
         self.add_shortcut_button = ctk.CTkButton(self.shortcuts_frame, text="Add Shortcut", command=self.add_shortcut)
         self.add_shortcut_button.grid(row=2, column=1, pady=(10, 0))
+
+        self.grant_wmi_permissions_button = ctk.CTkButton(
+            self.shortcuts_frame, text="Run as Admin", command=lambda: elevate_privileges_and_grant_wmi_permissions("main.py"))
+        self.grant_wmi_permissions_button.grid(row=3, column=1, pady=(10, 0))
 
         self.mainloop()
 

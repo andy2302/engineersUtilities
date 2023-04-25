@@ -416,8 +416,8 @@ class App(ctk.CTk):
         self.progressbar = ctk.CTkProgressBar(window, variable=self.progressbar_value)
         self.progressbar.grid(row=1, column=0, padx=20, pady=20, sticky='nsew')
 
-        # Dev - after finishing development will be changed to another
-        # functionality (ex. opening default calculator app) or something else
+        # Dev - after finishing development change to Run as admin import elevate_privileges and change command
+        # to lambda: elevate_privileges_and_grant_wmi_permissions("main.py")
         dev_button = ctk.CTkButton(window, text='In Dev Features', command=open_dev_feat)
         dev_button.grid(row=2, column=0)
 
